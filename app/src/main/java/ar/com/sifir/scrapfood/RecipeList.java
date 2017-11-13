@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -53,7 +54,6 @@ public class RecipeList extends Activity {
 
         //hago la query con volley
         RequestQueue queue = Volley.newRequestQueue(this);
-
         StringRequest request = new StringRequest(Request.Method.GET,
                 getQuery(query, page),
                 //1er callback - respuesta
@@ -63,7 +63,7 @@ public class RecipeList extends Activity {
                         Recipe[] list = gson.fromJson(response, Recipe[].class);
                         adapter = new AdaptadorList(ctx,list);
                         recyclerView.setAdapter(adapter);
-                        Log.d("agarro: ", list[0].toString());
+                        //Log.d("agarro: ", list[0].toString());
                     }
                 },
                 //2do callback - error
@@ -77,12 +77,73 @@ public class RecipeList extends Activity {
         queue.add(request);
     }
 
+    public void masRecipes (View v){
+        final  Gson gson = new Gson();
+        final Context ctx = this;
+        page = page+1;
+
+        //hago la query con volley
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.GET,
+                getQuery(query, page),
+                //1er callback - respuesta
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Recipe[] list = gson.fromJson(response, Recipe[].class);
+                        adapter = new AdaptadorList(ctx,list);
+                        recyclerView.setAdapter(adapter);
+                        //Log.d("agarro: ", list[0].toString());
+                    }
+                },
+                //2do callback - error
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Error de volley: ", error.getLocalizedMessage());
+                    }
+                });
+
+        queue.add(request);
+    }
+
+    public void lessRecipes (View v){
+        final  Gson gson = new Gson();
+        final Context ctx = this;
+        page = page-1;
+
+        if (page < 1)
+            page = page+1;
+
+        //hago la query con volley
+        RequestQueue queue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.GET,
+                getQuery(query, page),
+                //1er callback - respuesta
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Recipe[] list = gson.fromJson(response, Recipe[].class);
+                        adapter = new AdaptadorList(ctx,list);
+                        recyclerView.setAdapter(adapter);
+                        //Log.d("agarro: ", list[0].toString());
+                    }
+                },
+                //2do callback - error
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Error de volley: ", error.getLocalizedMessage());
+                    }
+                });
+
+        queue.add(request);
+    }
+
+
+
     private String getQuery(String query, int page){
 
         return HOST+GETLIST+query+"/"+page;
-    }
-
-    private void getRecepies() {
-        // llamar a request
     }
 }

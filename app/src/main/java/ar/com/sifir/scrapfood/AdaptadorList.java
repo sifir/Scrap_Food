@@ -67,7 +67,7 @@ public class AdaptadorList extends RecyclerView.Adapter<AdaptadorList.ViewHolder
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, RecipeActivity.class);
-                intent.putExtra("url", receta.getId());
+                intent.putExtra("url", receta.getUrl());
                 context.startActivity(intent);
             }
         });

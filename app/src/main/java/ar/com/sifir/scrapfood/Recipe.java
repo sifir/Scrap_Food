@@ -10,12 +10,14 @@ public class Recipe {
     private String[] ingredients;
     private String url;
     private String img;
+    private String[] pasos;
 
-    public Recipe(String title, String[] ingredients, String url, String img){
+    public Recipe(String title, String[] ingredients, String url, String img, String pasos[]){
         this.title = title;
         this.ingredients = ingredients;
         this.url = url;
         this.img = img;
+        this.pasos = pasos;
     }
 
     public String getTitle () {return title;};
