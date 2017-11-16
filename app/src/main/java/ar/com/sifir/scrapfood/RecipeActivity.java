@@ -69,8 +69,6 @@ public class RecipeActivity extends Activity {
                     @Override
                     public void onResponse(String response) {
 
-
-                        Log.d("response: ", response);
                         Recipe recipe = gson.fromJson(response, Recipe.class);
                         mRecipeTitle.setText(recipe.getTitle());
                         imgPlaceholder = recipe.getImg();
@@ -97,11 +95,8 @@ public class RecipeActivity extends Activity {
                         listView.setAdapter(adaptador);
 
 
-                        Log.d("agarro objeto: ", recipe.toString());
-                        Log.d("agarro query: ", getQuery(url));
-                        Log.d("agarro url: ", url);
-                        Log.d("agarro steps text: ", recipe.getStepsText().toString());
-                        Log.d("agarro step imgs: ", recipe.getStepsImg().toString());
+/*                        Log.d("agarro steps text: ", recipe.getStepsText().toString());
+                        Log.d("agarro step imgs: ", recipe.getStepsImg().toString());*/
                     }
                 },
                 //2do callback - error
