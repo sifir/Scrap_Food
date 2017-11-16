@@ -100,6 +100,13 @@ public class RecipeActivity extends Activity {
                             i++;
                         }
 
+                        //ESTO DA ERROR POR SER NULL
+/*                        int x = 0;
+                        while ( x < recipe.getStepCount()){
+                            Log.i("Step img " + x + " ",stepsImages[x]);
+                            x++;
+                        }*/
+
                         //uso de la lista
                         AdaptadorStep adaptador = new AdaptadorStep(activity, R.layout.activity_step,stepsText,stepsImages);
                         ListView listView = (ListView)findViewById(R.id.listSteps);
