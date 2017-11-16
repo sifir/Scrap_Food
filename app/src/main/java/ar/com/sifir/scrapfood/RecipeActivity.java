@@ -89,8 +89,8 @@ public class RecipeActivity extends Activity {
                         });
                         mRecipeImage.setImageUrl(recipe.getImg(), loader);
 
-                        String[] stepsText = new String[recipe.getStepCount()];
-                        String[] stepsImages = new String[recipe.getStepCount()];
+                        String[] stepsText;
+                        String[] stepsImages;
                         stepsText = recipe.getStepsText();
                         stepsImages = recipe.getStepsImg();
 
