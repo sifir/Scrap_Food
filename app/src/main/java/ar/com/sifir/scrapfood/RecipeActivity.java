@@ -75,10 +75,7 @@ public class RecipeActivity extends Activity {
                         mRecipeTitle.setText(recipe.getTitle());
                         imgPlaceholder = recipe.getImg();
 
-                        AdaptadorStep adaptador = new AdaptadorStep(activity, R.layout.activity_step,recipe.getStepsText(),recipe.getStepsImg());
-                        ListView listView = (ListView)findViewById(R.id.listSteps);
-                        listView.setAdapter(adaptador);
-
+                        //creo el cache de la imagen y la seteo
                         RequestQueue r = Volley.newRequestQueue(context);
                         loader = new ImageLoader(r, new ImageLoader.ImageCache() {
                             private final LruCache<String, Bitmap> mcache = new LruCache<>(10);
@@ -93,6 +90,11 @@ public class RecipeActivity extends Activity {
                             }
                         });
                         mRecipeImage.setImageUrl(recipe.getImg(), loader);
+
+                        //uso de la lista
+                        AdaptadorStep adaptador = new AdaptadorStep(activity, R.layout.activity_step,recipe.getStepsText(),recipe.getStepsImg());
+                        ListView listView = (ListView)findViewById(R.id.listSteps);
+                        listView.setAdapter(adaptador);
 
 
                         Log.d("agarro objeto: ", recipe.toString());

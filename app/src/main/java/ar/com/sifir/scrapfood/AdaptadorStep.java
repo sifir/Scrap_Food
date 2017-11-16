@@ -21,7 +21,7 @@ import com.android.volley.toolbox.Volley;
  * Created by Sifir on 16/11/2017.
  */
 
-public class AdaptadorStep extends ArrayAdapter<Step>{
+public class AdaptadorStep extends ArrayAdapter<String>{
 
     Activity context;
     String[] img;
