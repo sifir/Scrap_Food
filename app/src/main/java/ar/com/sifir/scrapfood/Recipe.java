@@ -1,5 +1,7 @@
 package ar.com.sifir.scrapfood;
 
+import android.util.Log;
+
 /**
  * Created by Sifir on 02/11/2017.
  */
@@ -50,29 +52,28 @@ public class Recipe {
     public int getStepCount() {
         return pasos.length;
     }
+    
 
     public String[] getStepsText(){
-        int l = pasos.length;
-        int i =0;
-        String[] text = new String[l];
-
-        while (i <= l){
-            text[i] = pasos[i].getText();
+        int i = 0;
+        String[] temp = new String[pasos.length];
+        for (Step p : pasos) {
+            temp[i] = pasos[i].getText();
             i++;
         }
-        return text;
+        return  temp;
+
     }
 
     public String[] getStepsImg(){
-        int l = pasos.length;
-        int i =0;
-        String[] text = new String[l];
-
-        while (i <= l){
-            text[i] = pasos[i].getImg();
+        int i = 0;
+        String[] temp = new String[pasos.length];
+        for (Step p : pasos) {
+            temp[i] = pasos[i].getImg();
             i++;
         }
-        return text;
+        return  temp;
+
     }
 
     @Override
