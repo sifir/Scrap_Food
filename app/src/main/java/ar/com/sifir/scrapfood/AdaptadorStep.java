@@ -26,11 +26,6 @@ import butterknife.BindView;
 
 public class AdaptadorStep extends ArrayAdapter<String>{
 
-    @BindView(R.id.stepTextView)
-    TextView mStepText;
-    @BindView(R.id.stepNetworkImageView)
-    NetworkImageView mStepView;
-
     Activity context;
     String[] img;
     String[] text;
@@ -45,6 +40,9 @@ public class AdaptadorStep extends ArrayAdapter<String>{
     public View getView(final int position, View convertView, ViewGroup parent){
         LayoutInflater inflater = context.getLayoutInflater();
         View item = inflater.inflate(R.layout.activity_step, null);
+
+        NetworkImageView networkImageView = (NetworkImageView)item.findViewById(R.id.stepNetworkImageView);
+        TextView textView = (TextView)item.findViewById(R.id.stepTextView);
 
         //seteo
         ImageLoader loader;
@@ -61,8 +59,9 @@ public class AdaptadorStep extends ArrayAdapter<String>{
                 mcache.put(url,bitmap);
             }
         });
-        mStepView.setImageUrl(img[position],loader);
-        mStepText.setText(text[position]);
+
+        networkImageView.setImageUrl(img[position], loader);
+        textView.setText(text[position]);
 
         return item;
     }

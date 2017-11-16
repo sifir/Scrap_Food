@@ -89,14 +89,21 @@ public class RecipeActivity extends Activity {
                         });
                         mRecipeImage.setImageUrl(recipe.getImg(), loader);
 
+                        String[] stepsText = new String[recipe.getStepCount()];
+                        String[] stepsImages = new String[recipe.getStepCount()];
+                        stepsText = recipe.getStepsText();
+                        stepsImages = recipe.getStepsImg();
+
+                        int i = 0;
+                        while ( i < recipe.getStepCount()){
+                            Log.i("Step text " + i + " ",stepsText[i]);
+                            i++;
+                        }
+
                         //uso de la lista
-                        AdaptadorStep adaptador = new AdaptadorStep(activity, R.layout.activity_step,recipe.getStepsText(),recipe.getStepsImg());
+                        AdaptadorStep adaptador = new AdaptadorStep(activity, R.layout.activity_step,stepsText,stepsImages);
                         ListView listView = (ListView)findViewById(R.id.listSteps);
                         listView.setAdapter(adaptador);
-
-
-/*                        Log.d("agarro steps text: ", recipe.getStepsText().toString());
-                        Log.d("agarro step imgs: ", recipe.getStepsImg().toString());*/
                     }
                 },
                 //2do callback - error
