@@ -93,7 +93,7 @@ public class RecipeList extends Activity {
                         Recipe[] list = gson.fromJson(response, Recipe[].class);
                         adapter = new AdaptadorList(ctx,list);
                         recyclerView.setAdapter(adapter);
-                        //Log.d("agarro: ", list[0].toString());
+                        Log.d("agarro: ", list[0].toString());
                     }
                 },
                 //2do callback - error

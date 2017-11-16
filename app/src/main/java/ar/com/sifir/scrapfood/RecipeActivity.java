@@ -31,7 +31,11 @@ public class RecipeActivity extends Activity {
     @BindView(R.id.recipeTitle2)
     TextView mRecipeTitle;
     @BindView(R.id.recipeImage2)
-    NetworkImageView mRecipeImage;;
+    NetworkImageView mRecipeImage;
+    @BindView(R.id.ingredientText)
+    TextView mIngredients;
+
+    String imgPlaceholder;
     //ejemplo de url https://enigmatic-everglades-29402.herokuapp.com/api/recipe/3609699-papas-rellenas
 
     protected void onCreate (Bundle savedInstanceState){
@@ -53,13 +57,17 @@ public class RecipeActivity extends Activity {
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.GET,
                 // si aca lo hago con URL que es lo correcto, crashea
-                getQuery(query),
+                getQuery(url),
                 //1er callback - respuesta
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Log.d("response: ", response);
                         Recipe recipe = gson.fromJson(response, Recipe.class);
                         mRecipeTitle.setText(recipe.getTitle());
+                        mIngredients.setText(recipe.getIngredientsString());
+                        imgPlaceholder = recipe.getImg();
+
 
                         Log.d("agarro objeto: ", recipe.toString());
                         Log.d("agarro query: ", getQuery(url));
