@@ -13,20 +13,19 @@
         <TextView
             android:id="@+id/recipeTitle2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.15" />
+            android:layout_height="wrap_content" />
 
         <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/recipeImage2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.55"
-            app:srcCompat="@mipmap/ic_launcher" />
+            app:srcCompat="@mipmap/ic_launcher"
+            android:visibility="visible"/>
 
-        <ListView
-            android:id="@+id/listSteps"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/stepList"
             android:layout_width="match_parent"
-            android:layout_height="107dp"
-            android:layout_weight="0.68" />
+            android:layout_height="match_parent" />
+
     </LinearLayout>
 </RelativeLayout>

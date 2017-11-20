@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.util.LruCache;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -36,6 +38,8 @@ public class RecipeActivity extends Activity {
     TextView mRecipeTitle;
     @BindView(R.id.recipeImage2)
     NetworkImageView mRecipeImage;
+    @BindView(R.id.stepList)
+    RecyclerView recyclerView;
 
     Context context;
     String imgPlaceholder;
@@ -57,12 +61,12 @@ public class RecipeActivity extends Activity {
         //saco la url limpia
         String[] separate = this.url.split("/");
         url = separate[3];
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
         //hago la query con volley
         RequestQueue queue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.GET,
-                // si aca lo hago con URL que es lo correcto, crashea
                 getQuery(url),
                 //1er callback - respuesta
                 new Response.Listener<String>() {
@@ -89,28 +93,11 @@ public class RecipeActivity extends Activity {
                         });
                         mRecipeImage.setImageUrl(recipe.getImg(), loader);
 
-                        String[] stepsText;
-                        String[] stepsImages;
-                        stepsText = recipe.getStepsText();
-                        stepsImages = recipe.getStepsImg();
-
-                        int i = 0;
-                        while ( i < recipe.getStepCount()){
-                            Log.i("Step text " + i + " ",stepsText[i]);
-                            i++;
-                        }
-
-                        //ESTO DA ERROR POR SER NULL
-/*                        int x = 0;
-                        while ( x < recipe.getStepCount()){
-                            Log.i("Step img " + x + " ",stepsImages[x]);
-                            x++;
-                        }*/
 
                         //uso de la lista
-                        AdaptadorStep adaptador = new AdaptadorStep(activity, R.layout.activity_step,stepsText,stepsImages);
-                        ListView listView = (ListView)findViewById(R.id.listSteps);
-                        listView.setAdapter(adaptador);
+                        AdaptadorStep adaptador = new AdaptadorStep(activity,recipe.getSteps());
+                        recyclerView.setAdapter(adaptador);
+                        //adaptador.notifyDataSetChanged();
                     }
                 },
                 //2do callback - error

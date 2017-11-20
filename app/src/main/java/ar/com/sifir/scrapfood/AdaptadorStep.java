@@ -1,16 +1,13 @@
 package ar.com.sifir.scrapfood;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.util.Log;
-import android.util.LruCache;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -19,36 +16,23 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Sifir on 16/11/2017.
  */
 
-public class AdaptadorStep extends ArrayAdapter<String>{
+public class AdaptadorStep extends RecyclerView.Adapter<AdaptadorStep.ViewHolder> {
+    Context context;
+    Step[] steps;
+    ImageLoader loader;
 
-    Activity context;
-    String[] img;
-    String[] text;
-
-    public AdaptadorStep(Activity context, int resource, String[] text, String[] img) {
-        super(context, resource);
+    public AdaptadorStep(Context context, Step[] steps){
         this.context = context;
-        this.text = text;
-        this.img = img;
-    }
-
-    public View getView(final int position, View convertView, ViewGroup parent){
-        LayoutInflater inflater = context.getLayoutInflater();
-        View item = inflater.inflate(R.layout.activity_step, null);
-
-        NetworkImageView networkImageView = (NetworkImageView)item.findViewById(R.id.stepNetworkImageView);
-        TextView textView = (TextView)item.findViewById(R.id.stepTextView);
-
-        //seteo
-        ImageLoader loader;
+        this.steps = steps;
         RequestQueue r = Volley.newRequestQueue(context);
-        loader = new ImageLoader(r, new ImageLoader.ImageCache() {
-            private final LruCache<String, Bitmap> mcache = new LruCache<>(10);
+        this.loader = new ImageLoader(r, new ImageLoader.ImageCache() {
+            private final android.support.v4.util.LruCache<String, Bitmap> mcache = new android.support.v4.util.LruCache<>(10);
             @Override
             public Bitmap getBitmap(String url) {
                 return mcache.get(url);
@@ -59,10 +43,40 @@ public class AdaptadorStep extends ArrayAdapter<String>{
                 mcache.put(url,bitmap);
             }
         });
+    }
 
-        networkImageView.setImageUrl(img[position], loader);
-        textView.setText(text[position]);
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        return item;
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_step, parent, false);
+        return new ViewHolder(v);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final Step step = steps[position];
+        if (step.getImg() != null)
+            holder.mNetworkImage.setImageUrl(step.getImg(),loader);
+            holder.mStepText.setText(step.getText());
+    }
+
+    @Override
+    public int getItemCount() {
+        return steps.length;
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+
+        @BindView(R.id.stepTextView)
+        TextView mStepText;
+
+        @BindView(R.id.stepNetworkImageView)
+        NetworkImageView mNetworkImage;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 }
+

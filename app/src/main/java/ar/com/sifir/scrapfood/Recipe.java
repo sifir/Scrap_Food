@@ -49,6 +49,8 @@ public class Recipe {
         return separate[2];
     }
 
+    public Step[] getSteps(){return  pasos; }
+
     public int getStepCount() {
         return pasos.length;
     }

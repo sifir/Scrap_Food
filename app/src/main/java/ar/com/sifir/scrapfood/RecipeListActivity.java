@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
  * Created by Sifir on 02/11/2017.
  */
 
-public class RecipeList extends Activity {
+public class RecipeListActivity extends Activity {
     private final String HOST = "https://enigmatic-everglades-29402.herokuapp.com";
     private final String GETLIST = "/api/search/";
     int page = 1;

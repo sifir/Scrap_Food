@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import butterknife.ButterKnife;
-
 public class MainActivity extends AppCompatActivity {
 
     String query;
@@ -23,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         EditText t = (EditText) findViewById(R.id.searchField);
         query = t.getText().toString();
 
-        Intent myIntent = new Intent(this, RecipeList.class);
+        Intent myIntent = new Intent(this, RecipeListActivity.class);
         myIntent.putExtra("query", query);
         startActivity(myIntent);
     }
